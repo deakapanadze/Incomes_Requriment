@@ -1,7 +1,7 @@
 ﻿
 namespace Test_purchee
 {
-    partial class InventariesForm
+    partial class CategoriesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -67,15 +67,18 @@ namespace Test_purchee
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(5, 72);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.Size = new System.Drawing.Size(420, 201);
             this.dataGridView1.TabIndex = 3;
             // 
-            // InventariesForm
+            // CategoriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -86,7 +89,7 @@ namespace Test_purchee
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "InventariesForm";
+            this.Name = "CategoriesForm";
             this.Text = "ინვენტარის დამატება";
             this.Load += new System.EventHandler(this.InventariesForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

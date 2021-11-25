@@ -36,17 +36,17 @@ namespace Test_purchee
             this.requriments = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.Col_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_UserId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_NameInv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btn_inventaries = new System.Windows.Forms.Button();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.Col_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_NameInv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_isDone = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.requriments.SuspendLayout();
@@ -70,10 +70,13 @@ namespace Test_purchee
             // 
             // dataGridView2
             // 
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(3, 3);
             this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowTemplate.Height = 25;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView2.Size = new System.Drawing.Size(1103, 524);
@@ -123,11 +126,11 @@ namespace Test_purchee
             this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Col_Id,
             this.Col_Quantity,
-            this.Col_UserId,
             this.Col_Date,
             this.Col_Description,
             this.Col_Name,
-            this.Col_NameInv});
+            this.Col_NameInv,
+            this.Col_isDone});
             this.dataGridView3.Location = new System.Drawing.Point(6, 6);
             this.dataGridView3.MultiSelect = false;
             this.dataGridView3.Name = "dataGridView3";
@@ -139,57 +142,6 @@ namespace Test_purchee
             this.dataGridView3.ShowRowErrors = false;
             this.dataGridView3.Size = new System.Drawing.Size(1097, 524);
             this.dataGridView3.TabIndex = 0;
-            // 
-            // Col_Id
-            // 
-            this.Col_Id.DataPropertyName = "Id";
-            this.Col_Id.HeaderText = "Id";
-            this.Col_Id.Name = "Col_Id";
-            this.Col_Id.ReadOnly = true;
-            this.Col_Id.Visible = false;
-            // 
-            // Col_Quantity
-            // 
-            this.Col_Quantity.DataPropertyName = "Quantity";
-            this.Col_Quantity.HeaderText = "რაოდენობა";
-            this.Col_Quantity.Name = "Col_Quantity";
-            this.Col_Quantity.ReadOnly = true;
-            // 
-            // Col_UserId
-            // 
-            this.Col_UserId.DataPropertyName = "UserId";
-            this.Col_UserId.HeaderText = "UserId";
-            this.Col_UserId.Name = "Col_UserId";
-            this.Col_UserId.ReadOnly = true;
-            this.Col_UserId.Visible = false;
-            // 
-            // Col_Date
-            // 
-            this.Col_Date.DataPropertyName = "Date";
-            this.Col_Date.HeaderText = "თარიღი";
-            this.Col_Date.Name = "Col_Date";
-            this.Col_Date.ReadOnly = true;
-            // 
-            // Col_Description
-            // 
-            this.Col_Description.DataPropertyName = "Description";
-            this.Col_Description.HeaderText = "აღწერა";
-            this.Col_Description.Name = "Col_Description";
-            this.Col_Description.ReadOnly = true;
-            // 
-            // Col_Name
-            // 
-            this.Col_Name.DataPropertyName = "Name";
-            this.Col_Name.HeaderText = "განყოფილება";
-            this.Col_Name.Name = "Col_Name";
-            this.Col_Name.ReadOnly = true;
-            // 
-            // Col_NameInv
-            // 
-            this.Col_NameInv.DataPropertyName = "NameInv";
-            this.Col_NameInv.HeaderText = "კატეგორია";
-            this.Col_NameInv.Name = "Col_NameInv";
-            this.Col_NameInv.ReadOnly = true;
             // 
             // pictureBox1
             // 
@@ -230,6 +182,60 @@ namespace Test_purchee
             this.pictureBox3.Size = new System.Drawing.Size(30, 30);
             this.pictureBox3.TabIndex = 6;
             this.pictureBox3.TabStop = false;
+            // 
+            // Col_Id
+            // 
+            this.Col_Id.DataPropertyName = "Id";
+            this.Col_Id.HeaderText = "Id";
+            this.Col_Id.Name = "Col_Id";
+            this.Col_Id.ReadOnly = true;
+            this.Col_Id.Visible = false;
+            // 
+            // Col_Quantity
+            // 
+            this.Col_Quantity.DataPropertyName = "Quantity";
+            this.Col_Quantity.HeaderText = "რაოდენობა";
+            this.Col_Quantity.Name = "Col_Quantity";
+            this.Col_Quantity.ReadOnly = true;
+            // 
+            // Col_Date
+            // 
+            this.Col_Date.DataPropertyName = "DateCreated";
+            this.Col_Date.HeaderText = "თარიღი";
+            this.Col_Date.Name = "Col_Date";
+            this.Col_Date.ReadOnly = true;
+            // 
+            // Col_Description
+            // 
+            this.Col_Description.DataPropertyName = "Description";
+            this.Col_Description.HeaderText = "აღწერა";
+            this.Col_Description.Name = "Col_Description";
+            this.Col_Description.ReadOnly = true;
+            // 
+            // Col_Name
+            // 
+            this.Col_Name.DataPropertyName = "StructureName";
+            this.Col_Name.HeaderText = "განყოფილება";
+            this.Col_Name.Name = "Col_Name";
+            this.Col_Name.ReadOnly = true;
+            // 
+            // Col_NameInv
+            // 
+            this.Col_NameInv.DataPropertyName = "CategoryName";
+            this.Col_NameInv.HeaderText = "კატეგორია";
+            this.Col_NameInv.Name = "Col_NameInv";
+            this.Col_NameInv.ReadOnly = true;
+            // 
+            // Col_isDone
+            // 
+            this.Col_isDone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Col_isDone.DataPropertyName = "isDone";
+            this.Col_isDone.HeaderText = " ";
+            this.Col_isDone.Name = "Col_isDone";
+            this.Col_isDone.ReadOnly = true;
+            this.Col_isDone.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Col_isDone.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Col_isDone.Width = 50;
             // 
             // InventoryManagementForm
             // 
@@ -274,11 +280,11 @@ namespace Test_purchee
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col_Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col_Quantity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Col_UserId;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col_Date;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col_Description;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col_NameInv;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Col_isDone;
     }
 }
 

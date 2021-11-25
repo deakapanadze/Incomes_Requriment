@@ -12,22 +12,33 @@ using System.Windows.Forms;
 
 namespace Test_purchee
 {
-    public partial class InventariesForm : Form
+    public partial class CategoriesForm : Form
     {
         dbmanager db = new dbmanager();
 
-        public InventariesForm()
+        public CategoriesForm()
         {
             InitializeComponent();
         }
 
         private void save_inventary_Click(object sender, EventArgs e)
         {
-            Inventories inventary = new Inventories();
-            inventary.Name = txt_inventary.Text;
+            if (!string.IsNullOrEmpty(txt_inventary.Text))
+            {
 
-            db.AddInventary(inventary);
-            this.Close();
+                Category inventary = new Category();
+                inventary.Name = txt_inventary.Text;
+
+                db.AddCategory(inventary);
+                txt_inventary.Text = "";
+                Getinventary();
+
+            }
+            else
+            {
+                MessageBox.Show("ტექსტური ველი ცარიელია!!!");
+            }
+
 
 
         }
@@ -35,7 +46,7 @@ namespace Test_purchee
 
         private void Getinventary()
         {
-            dataGridView1.DataSource = db.Getinventary();
+            dataGridView1.DataSource = db.GetCategories();
         }
 
         private void InventariesForm_Load(object sender, EventArgs e)

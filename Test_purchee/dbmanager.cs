@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Test_purchee.Models;
-using Test_purchee.Models.JoinModels;
 
 namespace Test_purchee
 {
@@ -18,53 +17,12 @@ namespace Test_purchee
         public static string TsgDB = ConfigurationManager.ConnectionStrings["TsgDB"].ConnectionString;
 
 
-        //მოთხოვნის წამოღების მეთოდი
-        public List<Incomes> GetInComes()
-        {
-            List<Incomes> list = new List<Incomes>();
-
-            SqlCommand cmd = new SqlCommand("[GetInComes]");
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            using (SqlConnection conn = new SqlConnection(Purchase))
-            {
-                cmd.Connection = conn;
-                conn.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        Incomes In_Come = new Incomes();
-
-
-
-                        In_Come.ID = Convert.ToInt32(reader["Id"]);
-                        In_Come.InventoryId = Convert.ToInt32(reader["InventoryId"]);
-                        In_Come.Quantity = Convert.ToInt32(reader["Quantity"]);
-                        In_Come.DepartmentID = Convert.ToInt32(reader["DepartmentID"]);
-                        In_Come.Date = Convert.ToDateTime(reader["Date"]);
-                        In_Come.UserId = Convert.ToInt32(reader["UserId"]);
-                        In_Come.RequirementId = Convert.ToInt32(reader["RequirementId"]);
-
-
-                        list.Add(In_Come);
-
-                    }
-                    reader.Close();
-                }
-                return list.ToList();
-            }
-        }
-
-
-
         //შესყიდვების წამოღების მეთოდი
-
-        public List<Requirements> GetRequirements()
+        public List<Income> GetIncomes()
         {
-            List<Requirements> Requirements = new List<Requirements>();
+            List<Income> list = new List<Income>();
 
-            SqlCommand cmd = new SqlCommand("[GetRequirements]");
+            SqlCommand cmd = new SqlCommand("[GetIncomes]");
             cmd.CommandType = CommandType.StoredProcedure;
 
             using (SqlConnection conn = new SqlConnection(Purchase))
@@ -75,44 +33,46 @@ namespace Test_purchee
                 {
                     while (reader.Read())
                     {
-                        Requirements Rqrnts = new Requirements();
+                        Income income = new Income();
+
+                        income.ID = Convert.ToInt32(reader["Id"]);
+                        income.CategoryId = Convert.ToInt32(reader["CategoryId"]);
+                        income.Quantity = Convert.ToInt32(reader["Quantity"]);
+                        income.StructureID = Convert.ToInt32(reader["StructureID"]);
+                        income.DateCreated = Convert.ToDateTime(reader["DateCreated"]);
+                        income.UserName = Convert.ToString(reader["UserName"]);
+                        income.RequestId = Convert.ToInt32(reader["RequestId"]);
+                        income.CategoryName = Convert.ToString(reader["CategoryName"]);
+                        income.StructureName = Convert.ToString(reader["StructureName"]);
 
 
-
-                        Rqrnts.Id = Convert.ToInt32(reader["Id"]);
-                        Rqrnts.InventoryId = Convert.ToInt32(reader["InventoryId"]);
-                        Rqrnts.Quantity = Convert.ToInt32(reader["Quantity"]);
-                        Rqrnts.DepartmentID = Convert.ToInt32(reader["DepartmentID"]);
-                        //Rqrnts.UserId = Convert.ToInt32(reader["UserId"]);
-                        Rqrnts.Date = Convert.ToDateTime(reader["Date"]);
-                        Rqrnts.Description = Convert.ToString(reader["Description"]);
-
-
-                        Requirements.Add(Rqrnts);
+                        list.Add(income);
 
                     }
                     reader.Close();
                 }
 
-                return Requirements.ToList();
+                return list;
             }
         }
+
+
 
 
         // ინვენტარის დამატების მეთოდი
 
-        public void AddInventary(Inventories test)
+        public void AddCategory(Category c)
         {
-            SqlCommand cmd = new SqlCommand("AddInventary");
+            SqlCommand cmd = new SqlCommand("AddCategory");
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Name", test.Name);
+            cmd.Parameters.AddWithValue("@Name", c.Name);
 
             using (SqlConnection conn = new SqlConnection(Purchase))
             {
                 cmd.Connection = conn;
                 conn.Open();
-                cmd.ExecuteScalar();
+                cmd.ExecuteNonQuery();
                 conn.Close();
             }
         }
@@ -137,11 +97,11 @@ namespace Test_purchee
 
         // დაჯოინებულის წმაოღება
 
-        public List<joinpurchase> GETpurchase()
+        public List<Request> GetRequests()
         {
-            List<joinpurchase> list = new List<joinpurchase>();
+            List<Request> list = new List<Request>();
 
-            SqlCommand cmd = new SqlCommand("[GETpurchase]");
+            SqlCommand cmd = new SqlCommand("[GetRequests]");
             cmd.CommandType = CommandType.StoredProcedure;
 
             using (SqlConnection conn = new SqlConnection(Purchase))
@@ -152,26 +112,27 @@ namespace Test_purchee
                 {
                     while (reader.Read())
                     {
-                        joinpurchase joinp = new joinpurchase();
+                        Request r = new Request();
 
 
 
-                        joinp.Id = Convert.ToInt32(reader["Id"]);
-                        joinp.Quantity = Convert.ToInt32(reader["Quantity"]);
+                        r.Id = Convert.ToInt32(reader["Id"]);
+                        r.Quantity = Convert.ToInt32(reader["Quantity"]);
                         // joinp.UserId = Convert.ToInt32(reader["UserId"]);
-                        joinp.Date = Convert.ToDateTime(reader["Date"]);
-                        joinp.Description = Convert.ToString(reader["Description"]);
-                        joinp.Name = Convert.ToString(reader["Name"]);
-                        joinp.NameInv = Convert.ToString(reader["NameInv"]);
+                        r.DateCreated = Convert.ToDateTime(reader["DateCreated"]);
+                        r.Description = Convert.ToString(reader["Description"]);
+                        r.CategoryName = Convert.ToString(reader["CategoryName"]);
+                        r.StructureName = Convert.ToString(reader["StructureName"]);
+                        r.IsDone = Convert.ToBoolean(reader["isDone"]);
 
 
 
-                        list.Add(joinp);
+                        list.Add(r);
 
                     }
                     reader.Close();
                 }
-                return list.ToList();
+                return list;
             }
         }
 
@@ -179,33 +140,33 @@ namespace Test_purchee
 
         //req დამატება 
 
-        public void AddRequirements(Requirements test)
+        public void AddRequirements(Request r)
         {
-            SqlCommand cmd = new SqlCommand("AddRequirements");
+            SqlCommand cmd = new SqlCommand("AddRequest");
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@InventoryId", test.InventoryId);
-            cmd.Parameters.AddWithValue("@DepartmentID", test.DepartmentID);
-            cmd.Parameters.AddWithValue("@Quantity", test.Quantity);
-            cmd.Parameters.AddWithValue("@Date", test.Date);
-            cmd.Parameters.AddWithValue("@Description", test.Description);
+            cmd.Parameters.AddWithValue("@CategoryId", r.CategoryId);
+            cmd.Parameters.AddWithValue("@StructureID", r.StructureID);
+            cmd.Parameters.AddWithValue("@Quantity", r.Quantity);
+            cmd.Parameters.AddWithValue("@DateCreated", r.DateCreated);
+            cmd.Parameters.AddWithValue("@Description", r.Description);
 
 
             using (SqlConnection conn = new SqlConnection(Purchase))
             {
                 cmd.Connection = conn;
                 conn.Open();
-                cmd.ExecuteScalar();
+                cmd.ExecuteNonQuery();
                 conn.Close();
             }
         }
 
-        // ინვენტარის წამოღება
-        public List<Inventories> Getinventary()
+        // კატეგორიების წამოღება
+        public List<Category> GetCategories()
         {
-            List<Inventories> list = new List<Inventories>();
+            List<Category> list = new List<Category>();
 
-            SqlCommand cmd = new SqlCommand("[Getinventary]");
+            SqlCommand cmd = new SqlCommand("[GetCategories]");
             cmd.CommandType = CommandType.StoredProcedure;
 
             using (SqlConnection conn = new SqlConnection(Purchase))
@@ -216,31 +177,31 @@ namespace Test_purchee
                 {
                     while (reader.Read())
                     {
-                        Inventories inve = new Inventories();
+                        Category c = new Category();
 
 
 
-                        inve.Id = Convert.ToInt32(reader["Id"]);
-                        inve.Name = Convert.ToString(reader["Name"]);
+                        c.Id = Convert.ToInt32(reader["Id"]);
+                        c.Name = Convert.ToString(reader["Name"]);
 
 
 
-                        list.Add(inve);
+                        list.Add(c);
 
                     }
                     reader.Close();
                 }
-                return list.ToList();
+                return list;
             }
         }
 
 
-        // განყოფილებების წამოღება 
-        public List<Departments> GetDepartaments2()
+        // სტრუქტურების წამოღება 
+        public List<Structure> GetStructures()
         {
-            List<Departments> list = new List<Departments>();
+            List<Structure> list = new List<Structure>();
 
-            SqlCommand cmd = new SqlCommand("[GetDepartaments2]");
+            SqlCommand cmd = new SqlCommand("[GetStructures]");
             cmd.CommandType = CommandType.StoredProcedure;
 
             using (SqlConnection conn = new SqlConnection(Purchase))
@@ -251,7 +212,7 @@ namespace Test_purchee
                 {
                     while (reader.Read())
                     {
-                        Departments Depart = new Departments();
+                        Structure Depart = new Structure();
                         Depart.Id = Convert.ToInt32(reader["Id"]);
                         Depart.Name = Convert.ToString(reader["Name"]);
                         Depart.ParentID = Convert.ToInt32(reader["ParentID"]);
@@ -263,7 +224,7 @@ namespace Test_purchee
                     }
                     reader.Close();
                 }
-                return list.ToList();
+                return list;
             }
         }
 

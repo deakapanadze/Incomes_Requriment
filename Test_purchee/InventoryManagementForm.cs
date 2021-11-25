@@ -18,6 +18,7 @@ namespace Test_purchee
         public InventoryManagementForm()
         {
             InitializeComponent();
+            dataGridView3.AutoGenerateColumns = false;
         }
 
 
@@ -36,8 +37,8 @@ namespace Test_purchee
 
         private void Refresh()
         {
-            dataGridView2.DataSource = db.GetRequirements();
-            dataGridView3.DataSource = db.GETpurchase();
+            dataGridView2.DataSource = db.GetIncomes();
+            dataGridView3.DataSource = db.GetRequests();
         }
 
 
@@ -59,12 +60,11 @@ namespace Test_purchee
 
         private void btn_inventaries_Click(object sender, EventArgs e)
         {
-            InventariesForm addInventories = new InventariesForm();
+            CategoriesForm addInventories = new CategoriesForm();
             //ფანჯარა რომ ცენტრში გამოიტანოს
             addInventories.StartPosition = FormStartPosition.CenterScreen;
             addInventories.Show();
         }
 
-        
     }
 }

@@ -7,7 +7,7 @@ using Test_purchee.Models;
 
 namespace Test_purchee.Models
 {
-    public class Inventories
+    public class Category
     {
         public int Id { get; set; }
         public string Name { get; set; }

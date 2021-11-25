@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Test_purchee.Models
 {
-    public class Departments
+    public class Structure
     {
         public int Id { get; set; }
         public string Name { get; set; }

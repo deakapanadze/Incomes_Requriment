@@ -96,21 +96,22 @@ namespace Test_purchee
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(39, 115);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(92, 15);
+            this.label2.Size = new System.Drawing.Size(82, 15);
             this.label2.TabIndex = 7;
-            this.label2.Text = "განყოფილება";
+            this.label2.Text = "სტრუქტურა";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(39, 170);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 15);
+            this.label5.Size = new System.Drawing.Size(72, 15);
             this.label5.TabIndex = 8;
-            this.label5.Text = "ინვენტარი";
+            this.label5.Text = "კატეგორია";
             // 
             // cmb_Department
             // 
+            this.cmb_Department.DropDownWidth = 500;
             this.cmb_Department.FormattingEnabled = true;
             this.cmb_Department.Location = new System.Drawing.Point(147, 118);
             this.cmb_Department.Name = "cmb_Department";
